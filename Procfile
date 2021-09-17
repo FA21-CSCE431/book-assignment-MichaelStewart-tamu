@@ -1,0 +1,1 @@
+Release: rails db:migrate
