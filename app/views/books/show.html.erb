@@ -5,5 +5,23 @@
   <%= @book.title %>
 </p>
 
+<!--adding this next part to display Author -->
+<p>
+  <strong>Author:</strong>
+  <%= @book.author %>       <!-- This is almost like calling the attribute author from class book -->
+</p>
+
+<!--adding this next part to display Price -->
+<p>
+  <strong>Price:</strong>
+  <%= @book.price %>       <!-- This is almost like calling the attribute price from class book -->
+</p>
+
+<!--adding this next part to display Published Date -->
+<p>
+  <strong>Published Date:</strong>
+  <%= @book.published_date %>       <!-- This is almost like calling the attribute published date from class book -->
+</p>
+
 <%= link_to 'Edit', edit_book_path(@book) %> |
 <%= link_to 'Back', books_path %>
