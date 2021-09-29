@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
-
+  
   def about
   end
   
@@ -8,41 +8,46 @@ class BooksController < ApplicationController
   def index
     @books = Book.all
   end
-
+  
   # GET /books/1 or /books/1.json
   def show
   end
-
+  
   # GET /books/new
   def new
     @book = Book.new
   end
-
+  
   # GET /books/1/edit
   def edit
   end
-
+  
   # POST /books or /books.json
   def create
     @book = Book.new(book_params)   #calls the new command which will call a private function
+    #checking if the parameters have all been entered
+#    unless verify(@book)
+#        notice = "books not"
+#        redirect_to(books_path, notice: "Book was not successfully created, too few arguments")
+#        return
+#    end
     
     #next checking if it saved correctly
     respond_to do |format|
       if @book.save
-        format.html { redirect_to @book, notice: "Book was successfully created." }
-        format.json { render :show, status: :created, location: @book }
+        format.html {redirect_to books_path, notice: "Book was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @book.errors, status: :unprocessable_entity }
       end
     end
   end
-
+  
   # PATCH/PUT /books/1 or /books/1.json
   def update
     respond_to do |format|
       if @book.update(book_params)
-        format.html { redirect_to @book, notice: "Book was successfully updated." }
+        format.html { redirect_to books_path, notice: "Book was successfully updated." }
         format.json { render :show, status: :ok, location: @book }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -50,30 +55,38 @@ class BooksController < ApplicationController
       end
     end
   end
-
+  
+  def delete
+    @book = Book.find(params[:id])
+  end
+  
   # DELETE /books/1 or /books/1.json
   def destroy
+    @book = Book.find(params[:id])
     @book.destroy
     respond_to do |format|
-      format.html { redirect_to books_url, notice: "Book was successfully destroyed." }
+      format.html { redirect_to books_path, notice: "Book was successfully destroyed." }
       format.json { head :no_content }
     end
   end
   
-  def delete
-    @book = Book.find(params[:id])
-    @book.destroy
-    redirect_to(books_path)
-  end
+  
       
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
       @book = Book.find(params[:id])
     end
-
+  
     # Only allow a list of trusted parameters through.
     def book_params
       params.require(:book).permit(:title, :author, :price, :published_date)
     end
+    
+#    def verify(book)
+#      if book.title.empty? or book.price.nil? or book.price < 0 or book.author.empty?
+#        return false
+#      end
+#      return true
+#    end
 end

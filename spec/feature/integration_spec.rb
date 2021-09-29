@@ -12,6 +12,7 @@ RSpec.describe 'Creating a book', type: :feature do
 
   scenario 'valid inputs' do
     visit new_book_path
+    fill_in 'Title', with: 'harry 2'
     fill_in 'Author', with: 'J.K. Rowling'
     click_on 'Create Book'
     visit books_path
@@ -33,9 +34,10 @@ RSpec.describe 'Creating a book', type: :feature do
     fill_in 'Title', with: 'harry potter 4'
     fill_in 'Author', with: 'J.K. Rowling'
     fill_in 'Price', with: '20'
-    fill_in 'Published Date', with: 'oct 2, 2011'
+    fill_in 'book_published_date', with: '2021-09-28 00:00:00 UTC'
+#    select '2021-09-28 00:00:00 UTC', :from => 'published_date'
     click_on 'Create Book'
     visit books_path
-    expect(page).to have_content('oct 2, 2011')
+    expect(page).to have_content('2021-09-28 00:00:00 UTC')
   end
 end
